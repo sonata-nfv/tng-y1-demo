@@ -1,0 +1,8 @@
+descriptor_extension: yml
+package:
+  description: y1demo
+  maintainer: Luis Hens, Atos, luis.hensruiz.external@atos.net
+  name: "haproxy"
+  vendor: "atos"
+  version: "0.5"
+version: '0.5'
