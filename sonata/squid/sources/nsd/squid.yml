@@ -1,0 +1,39 @@
+descriptor_version: "1.0"
+vendor: "atos"
+name: "squid"
+version: "0.1"
+author: "Ana Pol @: QUOBIS"
+description: "Descriptor to y1demo"
+##
+## The various network functions this service
+## is composed of.
+##
+network_functions:
+  - vnf_id: "vnf_squid"
+    vnf_vendor: "atos"
+    vnf_name: "squid-vnf"
+    vnf_version: "0.1"    
+         
+
+##
+## The NS connection points to the
+## outside world.
+##
+connection_points:
+  - id: "nscpmgmt"
+    interface: "ipv4"
+    type: "management"
+
+
+##
+## The virtual links that interconnect
+## the different connections points.
+##
+virtual_links:
+  - id: "vlmgmt"
+    connectivity_type: "E-Line"
+    connection_points_reference:
+      - "vnf_squid:cpmgmt"
+      - "nscpmgmt"
+
+                 
