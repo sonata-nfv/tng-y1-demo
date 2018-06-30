@@ -1,0 +1,10 @@
+[
+  {
+    "name": "squid",
+    "port": 80,
+    "backends": [
+      { "name": "vnf1", "host": "172.17.0.7", "port": 3128 },
+      { "name": "vnf2", "host": "172.17.0.6", "port": 3128 }      
+    ]
+  }
+]
