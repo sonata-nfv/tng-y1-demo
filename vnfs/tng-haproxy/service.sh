@@ -1,4 +1,5 @@
 #!/bin/bash
+snmpd
 
 # Start the first process
 python api.py -D &
