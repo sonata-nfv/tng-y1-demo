@@ -8,9 +8,9 @@ RUN mv /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf.orig
 COPY ./snmpd.conf /etc/snmp/snmpd.conf 
 COPY ./scripts/* /etc/snmp/scripts/
 RUN systemctl enable snmpd.service
-
 COPY . /app
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 EXPOSE 5000
 WORKDIR /app
+ENTRYPOINT [ "bash" ]
 CMD ["./service.sh"]
