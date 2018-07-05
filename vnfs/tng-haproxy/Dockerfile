@@ -5,7 +5,7 @@ RUN yum -y install python-pip && yum clean all
 RUN yum -y install net-snmp net-snmp-utils net-snmp-perl socat nano && yum clean all
 RUN pip install flask-restful
 RUN mv /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf.orig
-COPY ./snmp.conf /etc/snmp/snmpd.conf 
+COPY ./snmpd.conf /etc/snmp/snmpd.conf 
 COPY ./scripts/* /etc/snmp/scripts/
 RUN systemctl enable snmpd.service
 
