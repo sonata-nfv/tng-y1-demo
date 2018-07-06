@@ -2,7 +2,7 @@
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/function-descriptor/vnfd-schema.yml"
 
 
-vendor: "atos"
+vendor: "eu.5gtango"
 name: "haproxy-vnf"
 version: "0.1"
 author: "Luis Hens :@ Atos"
@@ -12,6 +12,7 @@ virtual_deployment_units:
   - id: "vdu01"
     vm_image: "http://www.google.es"
     vm_image_format: "qcow2"
+    vm_image_md5: ba6468410e219ab8e83f93bb5580396
     resource_requirements:
       cpu:
         vcpus: 1
