@@ -29,12 +29,13 @@ virtual_deployment_units:
       - id: "mgmt"
         interface: "ipv4"
         type: "management"
-      - id: "internal"
-        interface: "ipv4"
-        type: "internal"
       - id: "external"
         interface: "ipv4"
         type: "external"
+      - id: "internal"
+        interface: "ipv4"
+        type: "internal"
+
 # input / output / internal / external /  management
 
 ## The virtual links that interconnect
