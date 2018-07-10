@@ -60,3 +60,11 @@ connection_points:
   - id: "cpexternal"
     interface: "ipv4"
     type: "external"
+
+function_specific_managers:
+ - id: "sonfsmreview-demohaproxycss1"
+   description: "haproxy FSM"
+   image: "tsoenen/haproxy"
+   options:
+     - key: "type"
+       value: "start"

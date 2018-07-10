@@ -49,3 +49,11 @@ connection_points:
   - id: "cpinternal"
     interface: "ipv4"
     type: "internal"
+
+function_specific_managers:
+ - id: "sonfsmreview-demosquidcss1"
+   description: "squid FSM"
+   image: "tsoenen/squid"
+   options:
+     - key: "type"
+       value: "start"
