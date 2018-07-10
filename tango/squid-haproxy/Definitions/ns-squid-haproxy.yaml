@@ -11,11 +11,11 @@ network_functions:
   - vnf_id: "vnf_squid"
     vnf_vendor: "eu.5gtango"
     vnf_name: "squid-vnf"
-    vnf_version: "0.1"
+    vnf_version: "0.2"
   - vnf_id: "vnf_haproxy"
     vnf_vendor: "eu.5gtango"
     vnf_name: "haproxy-vnf"
-    vnf_version: "0.1"    
+    vnf_version: "0.2"    
 
 connection_points:
   - id: "mgmt"
