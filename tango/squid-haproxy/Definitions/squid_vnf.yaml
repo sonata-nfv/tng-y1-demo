@@ -2,9 +2,9 @@
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/function-descriptor/vnfd-schema.yml"
 
 
-vendor: "atos"
+vendor: "eu.5gtango"
 name: "squid-vnf"
-version: "0.1"
+version: "0.2"
 author: "Luis Hens :@ Atos"
 description: "squid"
 
@@ -12,6 +12,7 @@ virtual_deployment_units:
   - id: "vdu01"
     vm_image: "http://www.google.es"
     vm_image_format: "qcow2"
+    vm_image_md5: 71ec4eeef2e67296e1150d2c49650573
     resource_requirements:
       cpu:
         vcpus: 1
@@ -29,11 +30,9 @@ virtual_deployment_units:
         interface: "ipv4"
         type: "internal"
 
-
-
 virtual_links:
   - id: "vlmgmt"
-    connectivity_type: "E-Line"
+    connectivity_type: "E-LAN"
     connection_points_reference:
       - "vdu01:mgmt"
       - "cpmgmt"
@@ -50,3 +49,11 @@ connection_points:
   - id: "cpinternal"
     interface: "ipv4"
     type: "internal"
+
+function_specific_managers:
+ - id: "sonfsmreview-demosquidcss1"
+   description: "squid FSM"
+   image: "tsoenen/squid"
+   options:
+     - key: "type"
+       value: "start"
