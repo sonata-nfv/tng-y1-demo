@@ -23,8 +23,4 @@ test_execution:
     - test_tag: http
       tag_id: tag_001
     - test_tag: ns_under_test
-      tag_id: eu.sonata-nfv.service-descriptor:haproxy:0.1
-    - test_tag: ns_under_test
-      tag_id: eu.sonata-nfv.service-descriptor:squid:0.1
-    - test_tag: ns_under_test
-      tag_id: eu.sonata-nfv.service-descriptor:haproxy-squid:0.1
+      tag_id: atos:haproxy:0.1
