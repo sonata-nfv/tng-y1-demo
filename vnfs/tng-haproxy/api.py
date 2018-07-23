@@ -12,6 +12,10 @@ def getfile():
     file = read_haproxy_cfg()
     return Response(file, mimetype='text/plain')
 
+@app.route('/ping', methods=['GET'])
+def get():
+    return Response("pong", mimetype='text/plain')
+
 @app.route('/', methods=['POST'])
 def post():
     data = str(json.dumps(request.json))
