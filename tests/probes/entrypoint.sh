@@ -57,7 +57,5 @@ else
   opt7="--header $HEADER"
 fi
 
-LogFile="/workspace/result.log"
-
 echo "COMMAND: /usr/local/bin/wrk $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1"
 /usr/local/bin/wrk $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1 > $LogFile
