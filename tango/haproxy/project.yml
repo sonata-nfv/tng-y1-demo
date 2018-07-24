@@ -8,11 +8,11 @@ package:
   maintainer: "Luis Hens"
   description: "This is the 5GTANGO network service for year 1 demo"
 files:
-  - path: "Definitions/ns-haproxy.yaml"
+  - path: "sources/nsd/haproxy.yml"
     type: "application/vnd.5gtango.nsd"
     tags:  # (optional)
       - "eu.5gtango"
-  - path: "Definitions/haproxy_vnf.yaml"
+  - path: "sources/vnf/haproxy-vnf/haproxy-vnf.yml"
     type: "application/vnd.5gtango.vnfd"
     tags:  # (optional)
       - "eu.5gtango"

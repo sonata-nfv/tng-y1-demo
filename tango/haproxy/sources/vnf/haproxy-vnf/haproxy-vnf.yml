@@ -15,7 +15,7 @@ virtual_deployment_units:
   - id: "vdu01"
     vm_image: "http://www.google.es"
     vm_image_format: "qcow2"
-    vm_image_md5: 'd5ab414b734040a5bbf8684347c2a1a6'
+    vm_image_md5: 'bdfd5c5539893a1cafc45c530b8e01ba'
     resource_requirements:
       cpu:
         vcpus: 1
@@ -29,12 +29,13 @@ virtual_deployment_units:
       - id: "mgmt"
         interface: "ipv4"
         type: "management"
-      - id: "internal"
-        interface: "ipv4"
-        type: "internal"
       - id: "external"
         interface: "ipv4"
         type: "external"
+      - id: "internal"
+        interface: "ipv4"
+        type: "internal"
+
 # input / output / internal / external /  management
 
 ## The virtual links that interconnect

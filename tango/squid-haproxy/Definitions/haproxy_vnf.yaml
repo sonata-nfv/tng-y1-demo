@@ -2,9 +2,9 @@
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/function-descriptor/vnfd-schema.yml"
 
 
-vendor: "atos"
+vendor: "eu.5gtango"
 name: "haproxy-vnf"
-version: "0.1"
+version: "0.2"
 author: "Luis Hens :@ Atos"
 description: "haproxy"
 
@@ -12,6 +12,7 @@ virtual_deployment_units:
   - id: "vdu01"
     vm_image: "http://www.google.es"
     vm_image_format: "qcow2"
+    vm_image_md5: bdfd5c5539893a1cafc45c530b8e01ba
     resource_requirements:
       cpu:
         vcpus: 1
@@ -110,3 +111,11 @@ connection_points:
   - id: "cpexternal"
     interface: "ipv4"
     type: "external"
+
+function_specific_managers:
+ - id: "sonfsmreview-demohaproxycss1"
+   description: "haproxy FSM"
+   image: "tsoenen/haproxy"
+   options:
+     - key: "type"
+       value: "start"

@@ -13,7 +13,6 @@ network_functions:
     vnf_vendor: "atos"
     vnf_name: "haproxy-vnf"
     vnf_version: "0.1"   
-         
 
 ##
 ## The NS connection points to the
