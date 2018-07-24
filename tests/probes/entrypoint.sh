@@ -57,5 +57,6 @@ else
   opt7="--header $HEADER"
 fi
 
-echo "COMMAND: /usr/local/bin/wrk $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1"
-/usr/local/bin/wrk $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1 > $LogFile
+echo "COMMAND: /usr/local/bin/wrk -s result.lua $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1"
+/usr/local/bin/wrk -s result.lua $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1 > $LogFile
+/bin/cat $LogFile | tail -41 > $DataFile
