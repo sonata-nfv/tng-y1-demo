@@ -29,6 +29,7 @@ partner consortium (www.sonata-nfv.eu).
 import logging
 import os
 import yaml
+import json
 import requests
 import time
 import configparser
@@ -152,7 +153,7 @@ class CssFSM(sonSMbase):
         """
 
         self.vnfr = content['vnfr']
-        self.mgmt_ip = content['vnfr']['virtual_deployment_units'][0]['vnfc_instance'] [0]['connection_points'][0]['interface']['address']
+        self.mgmt_ip = content['vnfr']['virtual_deployment_units'][0]['vnfc_instance'][0]['connection_points'][0]['interface']['address']
         LOG.info('mgmt_ip: ' + str(self.mgmt_ip))
 
         # Create a response for the FLM
@@ -166,14 +167,45 @@ class CssFSM(sonSMbase):
         This method handles a configure event.
         """
 
-        # The config event receives a list if IP addresses. The load needs to
-        # be balanced among these IP addreses.
+        # The config event receives a list if IP addresses of backends. The
+        # load needs to be balanced among these IP addreses.
         LOG.info(str(content))
 
-        response['status'] = 'COMPLETED'
+        payload = {}
+        payload['name'] = 'squid'
+        payload['port'] = 80
+        payload['backends'] = []
 
+        counter = 1
+        for backend in content['ips']:
+            new_backend = {}
+            new_backend['name'] = 'vnf' + str(counter)
+            new_backend['host'] = backend
+            new_backend['port'] = 3128
+            payload['backends'].append(new_backend)
+            counter = counter + 1
+
+        wrapper = []
+        wrapper.append(payload)
+
+        LOG.info('message for haproxy: ' + str(wrapper))
+        LOG.info(json.dumps(wrapper))
+
+        header = {'Content-Type': 'application/json'}
+        url = 'http://' + content['mgmt_ip'] + ':5000/'
+
+        post = requests.post(url,
+                             data=json.dumps(wrapper),
+                             headers=header,
+                             timeout=1.0)
+        LOG.info(str(post.status_code))
+        LOG.info(str(post.text))
+
+        response = {}
+        response['status'] = 'COMPLETED'
         LOG.info("Response message: " + str(response))
         return response
+
 
 def main():
     CssFSM()
