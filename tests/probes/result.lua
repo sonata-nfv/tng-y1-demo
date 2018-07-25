@@ -16,7 +16,7 @@ done = function(summary, latency, requests)
       io.write("\t\t{\n")
       n = latency:percentile(p)
       io.write(string.format("\t\t\t\"percentile\": %g,\n\t\t\t\"latency_in_microseconds\": %d\n", p, n))
-      if p == 99.999 then 
+      if p == 100 then 
           io.write("\t\t}\n")
       else 
           io.write("\t\t},\n")

@@ -26,12 +26,12 @@ virtual_deployment_units:
       - id: "mgmt"
         interface: "ipv4"
         type: "management"
-      - id: "internal"
-        interface: "ipv4"
-        type: "internal"
       - id: "external"
         interface: "ipv4"
         type: "external"
+      - id: "internal"
+        interface: "ipv4"
+        type: "internal"
 
     monitoring_parameters:
       - name: "cpu_util"
@@ -90,27 +90,27 @@ virtual_links:
     connection_points_reference:
       - "vdu01:mgmt"
       - "cpmgmt"
-  - id: "vlinternal"
-    connectivity_type: "E-Line"
-    connection_points_reference:
-      - "vdu01:internal"
-      - "cpinternal"
   - id: "vlexternal"
     connectivity_type: "E-Line"
     connection_points_reference:
       - "vdu01:external"
       - "cpexternal"
+  - id: "vlinternal"
+    connectivity_type: "E-Line"
+    connection_points_reference:
+      - "vdu01:internal"
+      - "cpinternal"
 
 connection_points:
   - id: "cpmgmt"
     interface: "ipv4"
     type: "management"
-  - id: "cpinternal"
-    interface: "ipv4"
-    type: "internal"
   - id: "cpexternal"
     interface: "ipv4"
     type: "external"
+  - id: "cpinternal"
+    interface: "ipv4"
+    type: "internal"
 
 function_specific_managers:
  - id: "sonfsmreview-demohaproxycss1"
