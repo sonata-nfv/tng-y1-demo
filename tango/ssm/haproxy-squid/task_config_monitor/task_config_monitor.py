@@ -81,14 +81,6 @@ class TaskConfigMonitorSSM(sonSMbase):
         topic = 'generic.ssm.' + self.sfuuid
         self.manoconn.subscribe(self.received_request, topic)
 
-        # Subscribe to a topic to emulate monitor behavior
-        topic = 'emulate.monitoring'
-        self.manoconn.subscribe(self.emulate_monitor_event, topic)
-
-        # Subscribe to reset topic
-        topic = 'emulate.reset'
-        self.manoconn.subscribe(self.reset, topic)
-
     def received_request(self, ch, method, prop, payload):
         """
         This method is called when the SLM is reaching out
@@ -115,11 +107,6 @@ class TaskConfigMonitorSSM(sonSMbase):
             self.configure_request(prop.correlation_id, content)
             return
 
-        if str(content['ssm_type']) == 'monitor':
-            LOG.info("Received a monitor request")
-            self.monitor_data(prop.correlation_id, content)
-            return
-
         # If the request type field doesn't match any of the above
         LOG.info("type " + str(content['ssm_type']) + " not covered by SSM")
 
@@ -134,8 +121,8 @@ class TaskConfigMonitorSSM(sonSMbase):
         # Update the received schedule
         schedule = content['schedule']
 
-        # schedule.insert(7, 'vnfs_config')
-        # schedule.insert(7, 'configure_ssm')
+        schedule.insert(8, 'vnfs_config')
+        schedule.insert(8, 'configure_ssm')
 
         response = {'schedule': schedule, 'status': 'COMPLETED'}
 
@@ -155,12 +142,13 @@ class TaskConfigMonitorSSM(sonSMbase):
         what the required payload is.
         """
 
+        LOG.info(str(content))
         if content["workflow"] == 'instantiation':
             msg = "Received a configure request for the instantiation workflow"
             self.configure_instantiation(corr_id, content)
 
-        if content["workflow"] == 'scaling':
-            msg = "Received a configure request for the reconfigure workflow"
+        if content["workflow"] == 'addvnf':
+            msg = "Received a configure request for the addvnf workflow"
             self.configure_reconfigure(corr_id, content)
 
     def configure_instantiation(self, corr_id, content):
@@ -171,25 +159,31 @@ class TaskConfigMonitorSSM(sonSMbase):
         SP.
         """
 
-        # Build the list of all the IPs of the different nginx VNFs
+        # Build the list of all the IPs of the different squid VNFs
         ips = []
 
         for vnf in content['functions']:
             vnfr = vnf['vnfr']
             vnfd = vnf['vnfd']
-            vdu_id = vnfd['virtual_deployment_units'][0]['id']
             ip = ''
-            if vnfd['name'] == 'nginx':
+            if vnfd['name'] == 'squid-vnf':
                 for cp in vnfr['virtual_deployment_units'][0]['vnfc_instance'][0]['connection_points']:
                     if cp['type'] != 'management':
                         ip = cp['interface']['address']
+                        ips.append(ip)
                         break
-                if vdu_id not in self.ancient_vdu:
-                    ips.append(ip)
-                    self.ancient_vdu.append(vdu_id)
 
-        LOG.info(str(self.ancient_vdu))
         LOG.info(str(ips))
+
+        mgmt_ip = ''
+        for vnf in content['functions']:
+            vnfr = vnf['vnfr']
+            vnfd = vnf['vnfd']
+            if vnfd['name'] == 'haproxy-vnf':
+                for cp in vnfr['virtual_deployment_units'][0]['vnfc_instance'][0]['connection_points']:
+                    if cp['type'] == 'management':
+                        mgmt_ip = cp['interface']['address']
+                        break
 
         # Create response
         response = {}
@@ -198,9 +192,9 @@ class TaskConfigMonitorSSM(sonSMbase):
         for vnf in content['functions']:
             new_entry = {}
             new_entry['id'] = vnf['id']
-            if vnf['vnfd']['name'] in ['vth-vnf']:
+            if vnf['vnfd']['name'] in ['haproxy-vnf']:
                 new_entry['configure'] = {'trigger': True,
-                                          'payload': {'ips': ips}}
+                                          'payload': {'ips': ips, 'mgmt_ip': mgmt_ip}}
             else:
                 new_entry['configure'] = {'trigger': False,
                                           'payload': {}}
@@ -208,10 +202,6 @@ class TaskConfigMonitorSSM(sonSMbase):
             response['vnf'].append(new_entry)
 
         LOG.info("Generated response: " + str(response))
-
-        # Opening up scaling workflow
-        self.scaling_running = False
-        self.last_scaling = datetime.datetime.now()
 
         # Sending a response
         topic = 'generic.ssm.' + self.sfuuid
@@ -230,81 +220,6 @@ class TaskConfigMonitorSSM(sonSMbase):
         # reconfigure and configuration after instantiation are identical
 
         self.configure_instantiation(corr_id, content)
-
-    def monitor_data(self, corr_id, content):
-        """
-        This method will be triggered when monitoring data is received.
-        """
-        LOG.info("New monitoring event: " + str(content))
-
-        # A message on this topic can contain all the records, if they have
-        # changed
-        if 'vnfs' in content.keys():
-            for vnf in content['vnfs']:
-                if vnf['vnfd']['name'] == 'nginx':
-                    self.nginx_vnfd = vnf['vnfd']
-                    self.vim_uuid = vnf['vnfr']['virtual_deployment_units'][0]['vnfc_instance'][0]['vim_id']
-
-        LOG.info('vnfd: ' + str(self.nginx_vnfd))
-        LOG.info('vim_id: ' + str(self.vim_uuid))
-
-        # Check if the aggregated monitoring data implies a scaling event
-        if 'alertname' in content.keys():
-            LOG.info("New alert received.")
-            self.evaluate_monitoring(content)
-
-    def evaluate_monitoring(self, content):
-
-        # TODO: how to decide based on monitoring data whether a scaling
-        # event is required
-
-        if not self.scaling_running: 
-            time_since_last_event = datetime.datetime.now() - self.last_scaling
-            LOG.info("time diff: " + str(time_since_last_event.total_seconds()))
-            if time_since_last_event.total_seconds() > 60:
-                self.scaling_running = True
-                self.push_monitor_event()
-        else:
-            LOG.info("Scaling still running.")
-
-    def push_monitor_event(self):
-        """
-        This method sends a message to the SLM to start the reconfigure
-        workflow.
-        """
-
-        self.counter = self.counter + 1
-
-        LOG.info("Sending scaling trigger to MANO")
-        message = {}
-        message['workflow'] = 'scale_ns'
-        message['service_instance_id'] = self.sfuuid
-        message['data'] = {'add_vnf': 'nginx'}
-        message['data']['vim_uuid'] = self.vim_uuid
-        message['data']['vnfd'] = self.nginx_vnfd
-
-        message['data']['vnfd']['virtual_deployment_units'][0]['id'] = 'vdu0' + str(self.counter)
-
-        payload = yaml.dump(message)
-
-        topic = 'monitor.ssm.' + self.sfuuid
-        self.manoconn.notify(topic, payload)
-
-    def emulate_monitor_event(self, ch, method, prop, payload):
-        """
-        This topic processes an emulated monitor event
-        """
-
-        LOG.info("Manual Event should trigger MANO")
-        self.push_monitor_event()
-        self.monitor_event_finished = True
-
-    def reset(self, ch, method, prop, payload):
-        """
-        This topic processes an emulated monitor event
-        """
-        self.scaling_running = False
-
 
 
 def main():

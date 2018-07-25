@@ -118,4 +118,4 @@ function_specific_managers:
    image: "tsoenen/haproxy"
    options:
      - key: "type"
-       value: "start"
+       value: "configure"

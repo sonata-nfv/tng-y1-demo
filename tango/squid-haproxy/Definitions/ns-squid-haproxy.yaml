@@ -50,7 +50,7 @@ service_specific_managers:
   options:
   - key: "type"  
     value: "task"
-  # - key: type
-  #   value: monitor
-  # - key: "type"  
-  #   value: "configure"
+  - key: "type"  
+    value: "configure"
+  - key: "type"  
+    value: "scale"
