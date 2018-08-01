@@ -1,65 +1,65 @@
 {
-    "updated_at": "2018-08-01T10:03:47.801+00:00",
-    "signature": null,
-    "created_at": "2018-08-01T10:03:47.801+00:00",
-    "slad": {
-      "vendor": "tango-sla-mgmt",
-      "author": "Evgenia Kapassa, Marios Touloupou",
-      "name": "BRONZE",
-      "description": "",
-      "descriptor_schema": "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/service-descriptor/nsd-schema.yml",
-      "version": "0.1",
-      "sla_template": {
-        "offered_date": "2018-08-01T10:03:47Z",
-        "template_name": "BRONZE",
-        "valid_until": "2020-01-04T00:00:00Z",
-        "ns": {
-          "ns_description": "Ns for year 1 demo",
-          "guaranteeTerms": [
-            {
-              "unit": "%",
-              "serviceLevelObjetive": {
-                "duration": "10s",
-                "period": "1m",
-                "target_value": "3s",
-                "parameter": "Downtime",
-                "serviceLevel": "3sec/1min",
-                "operator": "less",
-                "serviceLevelDetail": [
-                  {
-                    "unit": "hours",
-                    "value": "0",
-                    "operator": "equal"
-                  },
-                  {
-                    "unit": "minutes",
-                    "value": "0",
-                    "operator": "equal"
-                  },
-                  {
-                    "unit": "sec",
-                    "value": "1",
-                    "operator": "equal"
-                  }
-                ]
-              },
-              "name": "Availability",
-              "definition": "Uptime shows the percentage the service is up and operational",
-              "value": "95",
-              "operator": "greater",
-              "guaranteeID": "g3"
-            }
-          ],
-          "ns_uuid": "d98a0313-2400-4ab1-aaf5-73e918b9789c",
-          "ns_name": "NS-squid-haproxy",
-          "ns_vendor": "eu.5gtango",
-          "ns_version": "0.1"
-        }
+  "updated_at": "2018-08-01T10:03:47.801+00:00",
+  "signature": null,
+  "created_at": "2018-08-01T10:03:47.801+00:00",
+  "slad": {
+    "vendor": "tango-sla-mgmt",
+    "author": "Evgenia Kapassa, Marios Touloupou",
+    "name": "BRONZE",
+    "description": "",
+    "descriptor_schema": "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/service-descriptor/nsd-schema.yml",
+    "version": "0.1",
+    "sla_template": {
+      "offered_date": "2018-08-01T10:03:47Z",
+      "template_name": "BRONZE",
+      "valid_until": "2020-01-04T00:00:00Z",
+      "ns": {
+        "ns_description": "Ns for year 1 demo",
+        "guaranteeTerms": [
+          {
+            "unit": "%",
+            "serviceLevelObjetive": {
+              "duration": "10s",
+              "period": "1m",
+              "target_value": "3s",
+              "parameter": "Downtime",
+              "serviceLevel": "3sec/1min",
+              "operator": "less",
+              "serviceLevelDetail": [
+                {
+                  "unit": "hours",
+                  "value": "0",
+                  "operator": "equal"
+                },
+                {
+                  "unit": "minutes",
+                  "value": "0",
+                  "operator": "equal"
+                },
+                {
+                  "unit": "sec",
+                  "value": "1",
+                  "operator": "equal"
+                }
+              ]
+            },
+            "name": "Availability",
+            "definition": "Uptime shows the percentage the service is up and operational",
+            "value": "95",
+            "operator": "greater",
+            "guaranteeID": "g3"
+          }
+        ],
+        "ns_uuid": "d98a0313-2400-4ab1-aaf5-73e918b9789c",
+        "ns_name": "NS-squid-haproxy",
+        "ns_vendor": "eu.5gtango",
+        "ns_version": "0.1"
       }
-    },
-    "published": false,
-    "uuid": "4a7e5468-118f-4cdb-8690-9d2a78121c72",
-    "md5": "1af125d571a7fdc568d8ad13965d9daf",
-    "status": "active",
-    "username": null
-  }
+    }
+  },
+  "published": false,
+  "uuid": "4a7e5468-118f-4cdb-8690-9d2a78121c72",
+  "md5": "1af125d571a7fdc568d8ad13965d9daf",
+  "status": "active",
+  "username": null
+}
