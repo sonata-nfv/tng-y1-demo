@@ -1,0 +1,65 @@
+{
+  "updated_at": "2018-08-01T09:54:03.112+00:00",
+  "signature": null,
+  "created_at": "2018-08-01T09:54:03.112+00:00",
+  "slad": {
+    "vendor": "tango-sla-mgmt",
+    "author": "Evgenia Kapassa, Marios Touloupou",
+    "name": "GOLD",
+    "description": "",
+    "descriptor_schema": "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/service-descriptor/nsd-schema.yml",
+    "version": "0.1",
+    "sla_template": {
+      "offered_date": "2018-08-01T09:54:03Z",
+      "template_name": "GOLD",
+      "valid_until": "2018-08-30T00:00:00Z",
+      "ns": {
+        "ns_description": "Ns for year 1 demo",
+        "guaranteeTerms": [
+          {
+            "unit": "%",
+            "serviceLevelObjetive": {
+              "duration": "10s",
+              "period": "1m",
+              "target_value": "0s",
+              "parameter": "Downtime",
+              "serviceLevel": "0sec/1min",
+              "operator": "less",
+              "serviceLevelDetail": [
+                {
+                  "unit": "hours",
+                  "value": "0",
+                  "operator": "equal"
+                },
+                {
+                  "unit": "minutes",
+                  "value": "0",
+                  "operator": "equal"
+                },
+                {
+                  "unit": "sec",
+                  "value": "1",
+                  "operator": "equal"
+                }
+              ]
+            },
+            "name": "Availability",
+            "definition": "Uptime shows the percentage the service is up and operational",
+            "value": "99.999",
+            "operator": "greater",
+            "guaranteeID": "g1"
+          }
+        ],
+        "ns_uuid": "3e4563d3-7e88-4eed-8f90-4df687077172",
+        "ns_name": "NS-squid-haproxy",
+        "ns_vendor": "eu.5gtango",
+        "ns_version": "0.1"
+      }
+    }
+  },
+  "published": false,
+  "uuid": "c19c4428-8ce9-4ee0-8d88-2ad1838b3757",
+  "md5": "b641a23853069deac99a0721aaa1bf5a",
+  "status": "active",
+  "username": null
+}
