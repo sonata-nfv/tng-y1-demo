@@ -26,6 +26,9 @@ connection_points:
     interface: "ipv4"
     type: "external"
 
+testing_tags: 
+  - http
+
 ##
 ## The virtual links that interconnect
 ## the different connections points.
