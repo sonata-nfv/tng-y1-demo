@@ -12,7 +12,7 @@ echo -e "Duration: \t"$DURATION
 echo -e "Threads: \t"$THREADS 
 echo -e "Header: \t"$HEADER
 echo -e "Timeout: \t"$TIMEOUT
-echo -e "Rate: \t\t"$RATE
+echo -e "Rate_array: \t\t"$RATES
 
 if [ -z $SCHEMA ] || [ -z $EXTERNAL_IP ] || [ -z $PORT ]; then
   echo "VNF Under Test endpoint was not set" > $LogFile
@@ -46,9 +46,9 @@ else
 fi
 
 if [ -z $RATE ]; then
-  opt6="--rate 50"
+  opt6="50"
 else
-  opt6="--rate $RATE"
+  opt6="$RATE"
 fi
 
 if [ -z $HEADER ]; then
@@ -57,6 +57,10 @@ else
   opt7="--header $HEADER"
 fi
 
-echo "COMMAND: /usr/local/bin/wrk -s result.lua $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1"
-/usr/local/bin/wrk -s /app/result.lua $opt2 $opt3 $opt4 $opt5 $opt6 $opt7 --latency $opt1 > $LogFile
-/bin/cat $LogFile | tail -41 > $DataFile
+for RATE in $RATES; do
+  echo "COMMAND: /usr/local/bin/wrk -s result.lua $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1"
+  /usr/local/bin/wrk -s /app/result.lua $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1 > $LogFile
+  /bin/cat $LogFile | tail -84 > $RATE.tmp
+  /bin/cat $RATE.tmp | jq . { "request_per_sec": .
+done
+

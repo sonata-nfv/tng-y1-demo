@@ -1,22 +1,6 @@
 -- example reporting script which demonstrates a custom
 -- done() function that prints results as JSON
 
-local connected = false
-local host = "os.getenv("HOST")"
-local path = "os.getenv("PATH")"
-local url  = "http://" .. host .. path
-
-wrk.headers["Host"] = host
-
-request = function()
-   if not connected then
-      connected = true
-      return wrk.format("CONNECT", host)
-   end
-
-   return wrk.format("GET", url)
-end
-
 done = function(summary, latency, requests)
    io.write("\nJSON Output\n")
    io.write("-----------\n\n")
@@ -38,5 +22,34 @@ done = function(summary, latency, requests)
           io.write("\t\t},\n")
       end
    end
+   io.write("\t],\n")
+
+   io.write("\t\"graphs\": [\n")
+   io.write("\t\t{\n")
+   io.write("\t\t\t\"title\": \"Latency Distribution\",\n")
+   io.write("\t\t\t\"x-axis-title\": \"Percentile\",\n")
+   io.write("\t\t\t\"x-axis-unit\": \"Percentage\",\n")
+   io.write("\t\t\t\"y-axix-title\": \"Latency\",\n")
+   io.write("\t\t\t\"y-axis-unit\": \"Miliseconds\",\n")
+   io.write("\t\t\t\"type\": \"bar\",\n")
+   io.write("\t\t\t\"series\": {\n")
+--   io.write("\t\t\t\t{\n")
+   io.write(string.format("\t\t\t\t\t\"s1\": \"latency\"\n"))
+   io.write("\t\t\t\t},\n")
+   io.write("\t\t\t\"data\": {\n")
+   io.write("\t\t\t\t\t \"s1\": [\n")
+   for _, p in pairs({ 50, 75, 90, 99, 99.9, 99.99, 99.999, 100 }) do
+      io.write("\t\t\t\t\t\t{\n")
+      n = latency:percentile(p)
+      io.write(string.format("\t\t\t\t\t\t\t\t\"x-axis\": %g,\n\t\t\t\t\t\t\t\t\"y-axis\": %d\n", p, n))
+      if p == 100 then 
+          io.write("\t\t\t\t\t\t}\n")
+      else 
+          io.write("\t\t\t\t\t\t},\n")
+      end
+   end
+   io.write("\t\t\t\t\t]\n")
+   io.write("\t\t\t\t}\n")
+   io.write("\t\t}\n")
    io.write("\t]\n}\n")
 end
