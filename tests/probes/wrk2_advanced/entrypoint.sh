@@ -46,7 +46,7 @@ else
 fi
 
 if [ -z $RATE ]; then
-  opt6="50"
+  opt6="10 20 50 100 500 1000"
 else
   opt6="$RATE"
 fi
