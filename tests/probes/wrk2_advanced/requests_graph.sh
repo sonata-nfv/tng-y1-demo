@@ -4,7 +4,7 @@
 let counter=0
 
 # Obtain the json generated list
-requests=`ls *.json | tr "." "\n" | grep -v json | grep -v detail | grep -v request | xargs`
+requests=`ls overall*.json | tr "." "\n" | grep -v json | xargs`
 
 # Graph template
 json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_sent", "s2": "requests_processed" }, "data": { "s1": [], "s2": [] } }]} '`
@@ -21,4 +21,4 @@ do
   let counter++
 done
 
-echo $json | jq .
+echo $json | jq . > requests.json
