@@ -1,0 +1,90 @@
+{
+  "requests": 201,
+  "duration_in_microseconds": 20021712,
+  "bytes": 9770100,
+  "requests_per_sec": 10.04,
+  "bytes_transfer_per_sec": 487975.25,
+  "latency_distribution": [
+    {
+      "percentile": 50,
+      "latency_in_microseconds": 93439
+    },
+    {
+      "percentile": 75,
+      "latency_in_microseconds": 95679
+    },
+    {
+      "percentile": 90,
+      "latency_in_microseconds": 97983
+    },
+    {
+      "percentile": 99,
+      "latency_in_microseconds": 119999
+    },
+    {
+      "percentile": 99.9,
+      "latency_in_microseconds": 250495
+    },
+    {
+      "percentile": 99.99,
+      "latency_in_microseconds": 250495
+    },
+    {
+      "percentile": 99.999,
+      "latency_in_microseconds": 250495
+    },
+    {
+      "percentile": 100,
+      "latency_in_microseconds": 250495
+    }
+  ],
+  "graphs": [
+    {
+      "title": "Latency Distribution",
+      "x-axis-title": "Percentile",
+      "x-axis-unit": "Percentage",
+      "y-axix-title": "Latency",
+      "y-axis-unit": "Miliseconds",
+      "type": "bar",
+      "series": {
+        "s1": "latency"
+      },
+      "data": {
+        "s1": [
+          {
+            "x-axis": 50,
+            "y-axis": 93439
+          },
+          {
+            "x-axis": 75,
+            "y-axis": 95679
+          },
+          {
+            "x-axis": 90,
+            "y-axis": 97983
+          },
+          {
+            "x-axis": 99,
+            "y-axis": 119999
+          },
+          {
+            "x-axis": 99.9,
+            "y-axis": 250495
+          },
+          {
+            "x-axis": 99.99,
+            "y-axis": 250495
+          },
+          {
+            "x-axis": 99.999,
+            "y-axis": 250495
+          },
+          {
+            "x-axis": 100,
+            "y-axis": 250495
+          }
+        ]
+      }
+    }
+  ]
+}
