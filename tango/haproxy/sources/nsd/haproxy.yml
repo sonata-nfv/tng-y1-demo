@@ -28,6 +28,7 @@ connection_points:
 
 testing_tags: 
   - http
+  - http-advanced
 
 ##
 ## The virtual links that interconnect
