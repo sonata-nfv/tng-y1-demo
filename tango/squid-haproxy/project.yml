@@ -26,3 +26,15 @@ files:
     type: "text/plain"
   - path: "Scripts/cloud.init"
     type: "text/x-shellscript"
+  - path: DefinitionsOSM/osm_ns-squid-haproxy.yml
+    type: application/vnd.etsi.osm.nsd
+    tags:
+      - etsi.osm
+  - path: DefinitionsOSM/osm_squid_vnf.yml
+    type: application/vnd.etsi.osm.vnfd
+    tags:
+      - etsi.osm
+  - path: DefinitionsOSM/osm_haproxy_vnf.yml
+    type: application/vnd.etsi.osm.vnfd
+    tags:
+      - etsi.osm

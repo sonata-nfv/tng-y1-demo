@@ -1,0 +1,41 @@
+vnfd-catalog:
+  vnfd:
+    - id: haproxy-vnf
+      name: haproxy-vnf
+      short-name: haproxy-vnf
+      vendor: eu.5gtango
+      version: 0.9
+      description: 'A Haproxy VNF'
+      vdu:
+        - id: vdu01
+          name: vdu01
+          image: 'ubuntu:16.04'
+          vm-flavor:
+            vcpu-count: 1
+            memory-gb: 1
+            storage-gb: 10
+          interface:
+            - name: vnf1-mgmt
+              type: EXTERNAL
+              virtual-interface:
+                type: VIRTIO
+              external-connection-point-ref: mgmt
+            - name: vnf1-input
+              type: EXTERNAL
+              virtual-interface:
+                type: VIRTIO
+              external-connection-point-ref: input
+            - name: vnf1-output
+              type: EXTERNAL
+              virtual-interface:
+                type: VIRTIO
+              external-connection-point-ref: output
+      connection-point:
+        - name: mgmt
+          type: VPORT
+        - name: input
+          type: VPORT
+        - name: output
+          type: VPORT
+      mgmt-interface:
+        cp: mgmt
