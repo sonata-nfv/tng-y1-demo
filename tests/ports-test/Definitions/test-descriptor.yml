@@ -8,11 +8,11 @@ description: >
 test_type: bash
 test_configuration_parameters:
       - parameter_name: "config_file"
-        parameter_definition: "location of the test file"
+        parameter_definition: "location of the test configuration file"
         parameter_value: "config.cfg"
         content_type: "text/plain"
       - parameter_name: "runner_file"
-        parameter_definition: "bash script to run the connectivity test within docker container"
+        parameter_definition: "bash script to run the test within docker container"
         parameter_value: "runner.sh"
         content_type: "text/plain"
 test_category:

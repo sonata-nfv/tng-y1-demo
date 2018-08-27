@@ -1,10 +1,10 @@
 FROM ubuntu
 LABEL maintainer="AR, ALB"
 RUN apt-get update
-RUN apt-get install -y apt-utils \
-                       telnet \
-                       nmap \
+RUN apt-get install -y telnet \
                        && apt-get remove --purge --auto-remove \
                        && rm -rf /var/lib/apt/lists/*
-#ENTRYPOINT [ "entrypoint.sh" ]
-ENTRYPOINT [ "telnet", "172.31.8.101", "80" ]
+WORKDIR /app
+ADD entrypoint.sh /app
+RUN ["chmod", "+x", "/app/entrypoint.sh"]
+ENTRYPOINT [ "/app/entrypoint.sh" ]
