@@ -1,0 +1,30 @@
+#
+# This is an example for custom, user-defined rules
+# to be used with tng-sdk-validate.
+#
+
+---
+# rule 1 - number of vCPUs
+- conditions:
+    all:
+      - name: vdu_resource_requirements_cpu_vcpus
+        operator: less_than
+        value: 1
+  actions:
+    - name: raise_error
+      params:
+        error_text: "Number of vCPUs must be at least 1!"
+
+# rule 2 - RAM size GB
+- conditions:
+    all:
+      - name: vdu_resource_requirements_ram_size
+        operator: less_than
+        value: 4
+      - name: vdu_resource_requirements_ram_size_unit
+        operator: not_equal_to
+        value: "GB"
+  actions:
+    - name: raise_error
+      params:
+        error_text: "The size of RAM must be at least 4 GB!"
