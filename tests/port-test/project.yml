@@ -1,0 +1,20 @@
+---
+descriptor_extension: yml
+version: '0.5'
+package:
+  vendor: "eu.5gtango"
+  name: "port-test"
+  version: "0.1"
+  maintainer: "AR, ALB"
+  description: "This is a 5GTANGO test package to check the availability of opened ports in an application or network service"
+files:
+  - path: "Definitions/test-descriptor.yml"
+    type: "application/vnd.5gtango.tstd"
+  - path: "Icons/upb_logo.png"
+    type: "image/png"
+  - path: "Licenses/LICENSE"
+    type: "text/plain"
+  - path: "Tests/config.cfg"
+    type: "text/plain"
+  - path: "Tests/runner.sh"
+    type: "text/x-shellscript"

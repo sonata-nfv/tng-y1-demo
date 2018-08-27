@@ -30,7 +30,7 @@ fi
 if [ -z $DURATION ]; then
   opt3="--duration 300s"
 else
-  opt3="--duration $CONNECTIONS"
+  opt3="--duration $DURATION"
 fi
 
 if [ -z $THREADS ]; then
@@ -73,17 +73,19 @@ done
 let counter=0
 
 # Obtain the json generated list
-requests=`ls rate*.json | tr "." "\n" | tr -d "rate-" | grep -v json | xargs`
+#requests=`ls rate*.json | tr "." "\n" | grep -v json | tr -d "rate-" | xargs`
 
-jsondetail=`echo '{"detail": [] }' | jq .`
+jsondetail=`echo '{"details": [] }' | jq .`
 
-for i in $requests
+for i in $RATES
 do
   join_json=`cat rate-$i.json`
   let iteration=$counter+1
-  jsondetail=`echo $jsondetail | jq ".detail[$counter] +=  $join_json"`
+  jsondetail=`echo $jsondetail | jq ".details[$counter] +=  $join_json"`
   let counter++
 done
+
+jsondetail=`echo $jsondetail | jq [.]`
 
 echo $jsondetail | jq . > details.json
 
@@ -93,33 +95,32 @@ echo $jsondetail | jq . > details.json
 let counter=0
 
 # Obtain the json generated list
-requests=`ls graphs*.json | tr "." "\n" | tr -d "graphs-" | grep -v json | xargs`
+#requests=`ls graphs*.json | tr "." "\n" | grep -v json | tr -d "graphs-" | xargs`
 
 graphs=`echo '{"graphs": [] }' | jq .`
 
 # Adding data to graphs object
-for i in $requests
+for j in $RATES
 do
-  join_json=`cat graphs-$i.json`
-  let iteration=$counter+1
-  graphs=`echo $graphs | jq ".graphs[$counter] += join_json"`
+  join_json=`cat graphs-$j.json | jq .graphs`
+  graphs=`echo $graphs | jq ".graphs += $join_json"`
   let counter++
 done
 
-echo $graphs | jq . > graphs.json
-
+echo $graphs | jq .graphs > graphs.json
+graphs=`echo $graphs | jq .graphs`
 
 # Variables initialization
 let counter=0
 
 # Obtain the json generated list
-requests=`ls overall*.json | tr "." "\n" | sed 's/\overall-//g' | grep -v json | xargs`
+#requests=`ls overall*.json | tr "." "\n" | sed 's/\overall-//g' | grep -v json | xargs`
 
 # Graph template
 json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_sent", "s2": "requests_processed" }, "data": { "s1": [], "s2": [] } }]} '`
 
 # Adding data to graphs object
-for i in $requests
+for i in $RATES
 do
   join_json=`cat overall-$i.json`
   let iteration=$counter+1
@@ -132,6 +133,14 @@ done
 
 echo $json | jq . > requests.json
 
-final_graph_object=`echo $json | jq ".graphs[.graphs|length] += $graphs"`
+final_graph_object=`echo $json | jq ".graphs += $graphs"`
+the_graphs=`echo $final_graph_object | jq '.graphs'`
+echo "the_graphs" $the_graphs
 
-detail_json=`echo $details | jq ". += $final_graph_object.graphs" > details.json
+detail_json=`echo $jsondetail | jq ". += [$final_graph_object]"`
+the_json=`echo $jsondetail | jq '.[].details'`
+detail_sin=`echo $detail_json | jq "{ details: $the_json, graphs: $the_graphs}"`
+#detail_sin=`echo $detail_json | jq "{ details: $jsondetail, graphs: $the_graphs}"`
+#detail_sin=`jq "{ details: $jsondetail, graphs: $the_graphs}"`
+echo  $detail_sin | jq . > $DataFile
+echo "detail_sin" $detail_sin
