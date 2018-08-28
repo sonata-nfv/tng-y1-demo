@@ -7,18 +7,24 @@ echo -e "Logs: \t\t"$LogFile
 echo -e "Schema: \t"$SCHEMA
 echo -e "VNF External IP: \t"$EXTERNAL_IP
 echo -e "Service Port: \t"$PORT
+echo -e "Path: \t"$URL_PATH
 echo -e "Connections: \t"$CONNECTIONS
 echo -e "Duration: \t"$DURATION
 echo -e "Threads: \t"$THREADS
 echo -e "Header: \t"$HEADER
 echo -e "Timeout: \t"$TIMEOUT
 echo -e "Rate_array: \t\t"$RATES
+echo -e "Proxy: \t\t"$PROXY
 
 if [ -z $SCHEMA ] || [ -z $EXTERNAL_IP ] || [ -z $PORT ]; then
   echo "VNF Under Test endpoint was not set" > $LogFile
   exit 1
 else
   opt1="$SCHEMA$EXTERNAL_IP:$PORT"
+fi
+
+if [ -z $URL_PATH ]; then
+  opt1="$opt1/$URL_PATH"
 fi
 
 if [ -z $CONNECTIONS ]; then
@@ -57,9 +63,15 @@ else
   opt7="--header $HEADER"
 fi
 
+if [ $PROXY = "yes" ]; then
+  config="/app/result_proxy.lua"
+else
+  config="/app/result.lua"
+fi
+
 for RATE in $RATES; do
-  echo "COMMAND: /usr/local/bin/wrk -s result.lua $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1"
-  /usr/local/bin/wrk -s /app/result.lua $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1 > $RATE.tmp
+  echo "COMMAND: /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1"
+  /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1 > $RATE.tmp
   cat $RATE.tmp >>  $LogFile
   /bin/cat $RATE.tmp | tail -90 | jq '{requests, duration_in_microseconds, bytes, requests_per_sec, bytes_transfer_per_sec, latency_distribution}' > rate-$RATE.json
   /bin/cat $RATE.tmp | tail -90 | jq '{ graphs }' > graphs-$RATE.json
