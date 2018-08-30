@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-sessions=$(./stat.sh BACKEND scur)
-servers=$(./stat.sh BACKEND act)
+sessions=$(/etc/snmp/scripts/stat.sh BACKEND scur)
+servers=$(/etc/snmp/scripts/stat.sh BACKEND act)
 
 if [[ $servers == 0  ]];
   then
