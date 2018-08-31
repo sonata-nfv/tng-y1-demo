@@ -1,6 +1,22 @@
 -- example reporting script which demonstrates a custom
 -- done() function that prints results as JSON
 
+local connected = false
+local host = "10.100.32.232"
+local path = "/"
+local url  = "http://" .. host .. path
+wrk.headers["Host"] = host
+
+request = function()
+   if not connected then
+      connected = true
+      return wrk.format("CONNECT", host)
+   end
+
+   return wrk.format("GET", url)
+end
+
+
 done = function(summary, latency, requests)
    io.write("\nJSON Output\n")
    io.write("-----------\n\n")

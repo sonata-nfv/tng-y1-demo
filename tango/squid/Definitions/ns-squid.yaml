@@ -13,11 +13,15 @@ network_functions:
     vnf_name: "squid_vnf"
     vnf_version: "0.1"
  
-
 connection_points:
   - id: "mgmt"
     interface: "ipv4"
     type: "management"
+
+testing_tags: 
+  - proxy
+  - proxy-advanced
+  - connectivity
 
 virtual_links:
   - id: "mgmt"

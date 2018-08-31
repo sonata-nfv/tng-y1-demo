@@ -1,10 +1,10 @@
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml"
 vendor: "eu.5gtango.atos"
-name: "http-benchmark-test-advanced"
+name: "http-benchmark-test-advanced-proxy"
 version: "0.1"
 author: "Felipe Vicens, ATOS"
 description: >
-  "Test descriptor for http benchmarking advanced"
+  "Test descriptor for http benchmarking"
 test_type: bash
 test_configuration_parameters:
       - parameter_name: "config_file"
@@ -20,5 +20,7 @@ test_category:
 
 #test tags are
 test_execution:
-    - test_tag: http-advanced
+    - test_tag: http-advanced-proxy
       tag_id: tag_001
+    - test_tag: proxy
+      tag_id: tag_002

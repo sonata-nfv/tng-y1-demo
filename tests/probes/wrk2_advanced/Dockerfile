@@ -21,5 +21,6 @@ RUN apt-get update && \
                        && rm -rf /var/lib/apt/lists/*
 COPY --from=0 /app/wrk2/wrk /usr/local/bin/
 ADD result.lua /app/
+ADD result_proxy.lua /app/
 ADD entrypoint.sh /app/
 ENTRYPOINT [ "/app/entrypoint.sh" ]

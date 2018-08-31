@@ -1,10 +1,8 @@
 ---
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/function-descriptor/vnfd-schema.yml"
-
-
 vendor: "eu.5gtango"
 name: "squid-vnf"
-version: "0.2"
+version: "0.1"
 author: "Luis Hens :@ Atos"
 description: "squid"
 
@@ -12,7 +10,7 @@ virtual_deployment_units:
   - id: "vdu01"
     vm_image: "http://www.google.es"
     vm_image_format: "qcow2"
-    vm_image_md5: 3e555b83052cbb4396ccbce8a97f489a
+    vm_image_md5: 01277950fd4aa3883a593250ccdbebc8
     resource_requirements:
       cpu:
         vcpus: 1
