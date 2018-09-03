@@ -1,0 +1,29 @@
+descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml"
+vendor: "eu.5gtango.atos.simple-test-descriptor"
+name: "ping-test"
+version: "0.1"
+author: "Luis Hens, ATOS"
+description: >
+  "Test descriptor for connectivity test"
+test_type: bash
+test_configuration_parameters:
+      - parameter_name: "config_file"
+        parameter_definition: "location of the test file"
+        parameter_value: "config.cfg"
+        content_type: "text/plain"
+      - parameter_name: "runner_file"
+        parameter_definition: "bash script to run the connectivity test within docker container"
+        parameter_value: "runner.sh"
+        content_type: "text/plain"
+test_category:
+    - category_type: performance
+
+#test tags are
+test_execution:
+    - test_tag: connectivity
+      tag_id: tag_001
+    - test_tag: http-advanced
+      tag_id: tag_001
+    - test_tag: ns_under_test
+      tag_id: atos:haproxy:0.1
+

@@ -30,19 +30,24 @@ done = function(summary, latency, requests)
    io.write("\t\t\t\"x-axis-title\": \"Percentile\",\n")
    io.write("\t\t\t\"x-axis-unit\": \"Percentage\",\n")
    io.write("\t\t\t\"y-axix-title\": \"Latency\",\n")
-   io.write("\t\t\t\"y-axis-unit\": \"Miliseconds\",\n")
-   io.write("\t\t\t\"data\": [\n")
+   io.write("\t\t\t\"y-axis-unit\": \"Microseconds\",\n")
+   io.write("\t\t\t\"type\": \"bar\",\n")
+   io.write("\t\t\t\"series\": {\n")
+   io.write(string.format("\t\t\t\t\t\"s1\": \"latency\"\n"))
+   io.write("\t\t\t\t},\n")
+   io.write("\t\t\t\"data\": {\n")
+   io.write("\t\t\t\t\t \"s1x\": [50, 75, 90, 99, 99.9, 99.99, 99.999, 100],\n")
+   io.write("\t\t\t\t\t \"s1y\": [")
    for _, p in pairs({ 50, 75, 90, 99, 99.9, 99.99, 99.999, 100 }) do
-      io.write("\t\t\t\t{\n")
       n = latency:percentile(p)
-      io.write(string.format("\t\t\t\t\t\"x-axis\": %g,\n\t\t\t\t\t\"y-axis\": %d\n", p, n))
+      io.write(string.format("%g ", n))
       if p == 100 then 
-          io.write("\t\t\t\t}\n")
+          io.write("]\n")
       else 
-          io.write("\t\t\t\t},\n")
+          io.write(",")
       end
    end
-   io.write("\t\t\t]\n")
+   io.write("\t\t\t\t}\n")
    io.write("\t\t}\n")
    io.write("\t]\n}\n")
 end

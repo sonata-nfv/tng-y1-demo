@@ -2,7 +2,7 @@
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/service-descriptor/nsd-schema.yml"
 
 vendor: "eu.5gtango"
-name: "NS-squid-haproxy"
+name: "ns-squid-haproxy"
 version: "0.1"
 author: "Luis Hens"
 description: "Ns for year 1 demo"
@@ -15,7 +15,7 @@ network_functions:
   - vnf_id: "vnf_haproxy"
     vnf_vendor: "eu.5gtango"
     vnf_name: "haproxy-vnf"
-    vnf_version: "0.2"    
+    vnf_version: "0.2"
 
 connection_points:
   - id: "mgmt"

@@ -1,0 +1,32 @@
+nsd-catalog:
+  nsd:
+    - id: ns-squid-haproxy
+      name: ns-squid-haproxy
+      description: Ns for year 1 demo
+      vendor: eu.5gtango
+      version: 1
+      constituent-vnfd:
+        - member-vnf-index: 0
+          vnfd-id-ref: squid-vnf
+        - member-vnf-index: 1
+          vnfd-id-ref: haproxy-vnf
+      vld:
+        - id: mgmt
+          name: mgmt
+          mgmt-network: true
+          vnfd-connection-point-ref:
+            - member-vnf-index-ref: 0
+              vnfd-connection-point-ref: mgmt
+              vnfd-id-ref: squid-vnf
+            - member-vnf-index-ref: 1
+              vnfd-connection-point-ref: mgmt
+              vnfd-id-ref: haproxy-vnf
+        - id: vnf0-2-vnf1
+          name: vnf0-2-vnf1
+          vnfd-connection-point-ref:
+            - member-vnf-index-ref: 0
+              vnfd-connection-point-ref: output
+              vnfd-id-ref: squid-vnf
+            - member-vnf-index-ref: 1
+              vnfd-connection-point-ref: input
+              vnfd-id-ref: haproxy-vnf
