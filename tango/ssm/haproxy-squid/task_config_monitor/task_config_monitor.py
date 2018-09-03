@@ -147,7 +147,7 @@ class TaskConfigMonitorSSM(sonSMbase):
             msg = "Received a configure request for the instantiation workflow"
             self.configure_instantiation(corr_id, content)
 
-        if content["workflow"] == 'addvnf':
+        if content["workflow"] in ['addvnf', 'removevnf']:
             msg = "Received a configure request for the addvnf workflow"
             self.configure_reconfigure(corr_id, content)
 
@@ -166,12 +166,14 @@ class TaskConfigMonitorSSM(sonSMbase):
             vnfr = vnf['vnfr']
             vnfd = vnf['vnfd']
             ip = ''
-            if vnfd['name'] == 'squid-vnf':
-                for cp in vnfr['virtual_deployment_units'][0]['vnfc_instance'][0]['connection_points']:
-                    if cp['type'] != 'management':
-                        ip = cp['interface']['address']
-                        ips.append(ip)
-                        break
+            if vnfr['status'] != 'terminated':
+                if vnfd['name'] == 'squid-vnf':
+                    for cp in vnfr['virtual_deployment_units'][0]['vnfc_instance'][0]['connection_points']:
+                        if cp['type'] == 'management':
+#                        if cp['type'] != 'management':
+                            ip = cp['interface']['address']
+                            ips.append(ip)
+                            break
 
         LOG.info(str(ips))
 
