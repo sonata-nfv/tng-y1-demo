@@ -194,12 +194,20 @@ class CssFSM(sonSMbase):
         header = {'Content-Type': 'application/json'}
         url = 'http://' + content['mgmt_ip'] + ':5000/'
 
-        post = requests.post(url,
-                             data=json.dumps(wrapper),
-                             headers=header,
-                             timeout=1.0)
-        LOG.info(str(post.status_code))
-        LOG.info(str(post.text))
+        i = 1
+        while i < 25:
+            try:
+                post = requests.post(url,
+                                     data=json.dumps(wrapper),
+                                     headers=header,
+                                     timeout=5.0)
+                LOG.info(str(post.status_code))
+                LOG.info(str(post.text))
+                break
+            except:
+                LOG.info("Retry, current attempt: " + str(i))
+                i = i + 1
+                time.sleep(10)
 
         response = {}
         response['status'] = 'COMPLETED'
