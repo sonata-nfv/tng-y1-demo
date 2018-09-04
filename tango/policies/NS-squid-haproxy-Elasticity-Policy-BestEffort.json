@@ -1,6 +1,6 @@
 {
 	"descriptor_schema": "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/policy-descriptor/policy-schema.yml",
-	"name": "NS-squid-haproxy-Elasticity-Policy-Premium1",
+	"name": "NS-squid-haproxy-Elasticity-Policy-Average",
 	"vendor": "eu.5gtango",
 	"version": "0.1",
 	"network_service": {
@@ -8,37 +8,30 @@
 		"name": "NS-squid-haproxy",
 		"version": "0.1"
 	},
-	"monitoring_rules": [{
-			"name": "mon_rule:vnf:squid-vnf:vdu:vdu01:cpu_util",
-			"description": "Trigger events if CPU load of squid is above 50 percent.",
-			"duration": 20,
-			"duration_unit": "s",
-			"condition": "cpu_util",
-			"threshold": "> 50"
-		},
+	"monitoring_rules": [
 		{
 			"name": "mon_rule:vnf:haproxy-vnf:vdu:vdu01:haproxy_frontend_scur",
-			"description": "Trigger events if haproxy frontend session are 150.",
+			"description": "Trigger events if haproxy frontend session are 500.",
 			"duration": 20,
 			"duration_unit": "s",
 			"condition": "haproxy_frontend_scur",
-			"threshold": " > 150"
+			"threshold": " > 500"
 		},
 		{
 			"name": "mon_rule:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_sespsrv",
-			"description": "Trigger events if haproxy number of the active sessions per squid server are more than 150.",
+			"description": "Trigger events if haproxy number of the active sessions per squid server are more than 500.",
 			"duration": 20,
 			"duration_unit": "s",
 			"condition": "haproxy_backend_sespsrv",
-			"threshold": " > 150"
+			"threshold": " > 500"
 		},
 		{
 			"name": "mon_rule1:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_sespsrv",
-			"description": "Trigger events if haproxy number of the active sessions per squid server are less than 30.",
+			"description": "Trigger events if haproxy number of the active sessions per squid server are less than 70.",
 			"duration": 1,
 			"duration_unit": "m",
 			"condition": "haproxy_backend_sespsrv",
-			"threshold": " < 30"
+			"threshold": " < 70"
 		},
 		{
 			"name": "mon_rule:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_actsrvs",
@@ -47,6 +40,14 @@
 			"duration_unit": "s",
 			"condition": "haproxy_backend_actsrvs",
 			"threshold": " > 1"
+		},
+		{
+			"name": "mon_rule1:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_actsrvs",
+			"description": "Trigger events if haproxy number of the squid servers which are in active state are less than 3.",
+			"duration": 20,
+			"duration_unit": "s",
+			"condition": "haproxy_backend_actsrvs",
+			"threshold": " < 3"
 		}
 	],
 	"policyRules": [{
@@ -65,6 +66,14 @@
 				"input": "text",
 				"operator": "equal",
 				"value": "mon_rule_vnf_haproxy_vnf_vdu_vdu01_haproxy_backend_sespsrv"
+			},
+			{
+				"id": "haproxy-vnf.LogMetric",
+				"field": "haproxy-vnf.LogMetric",
+				"type": "string",
+				"input": "text",
+				"operator": "equal",
+				"value": "mon_rule1_vnf_haproxy_vnf_vdu_vdu01_haproxy_backend_actsrvs"
 			}]
 		},
 		"actions": [{
