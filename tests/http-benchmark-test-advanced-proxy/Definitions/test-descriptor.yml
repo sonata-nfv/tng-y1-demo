@@ -20,7 +20,5 @@ test_category:
 
 #test tags are
 test_execution:
-    - test_tag: http-advanced
+    - test_tag: proxy-advanced
       tag_id: tag_001
-    - test_tag: http-advanced-proxy
-      tag_id: tag_002
