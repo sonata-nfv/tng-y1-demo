@@ -152,7 +152,7 @@ echo $json | jq . > requests.json
 
 final_graph_object=`echo $json | jq ".graphs += $graphs"`
 the_graphs=`echo $final_graph_object | jq '.graphs'`
-echo "the_graphs" $the_graphs
+#echo "the_graphs" $the_graphs
 
 detail_json=`echo $jsondetail | jq ". += [$final_graph_object]"`
 the_json=`echo $jsondetail | jq '.[].details'`
@@ -160,4 +160,4 @@ detail_sin=`echo $detail_json | jq "{ details: $the_json, graphs: $the_graphs}"`
 #detail_sin=`echo $detail_json | jq "{ details: $jsondetail, graphs: $the_graphs}"`
 #detail_sin=`jq "{ details: $jsondetail, graphs: $the_graphs}"`
 echo  $detail_sin | jq . > $DataFile
-echo "detail_sin" $detail_sin
+#echo "detail_sin" $detail_sin

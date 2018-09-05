@@ -19,9 +19,7 @@ connection_points:
     type: "management"
 
 testing_tags: 
-  - proxy
   - proxy-advanced
-  - connectivity
 
 virtual_links:
   - id: "mgmt"
