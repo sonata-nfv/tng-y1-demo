@@ -5,7 +5,7 @@
 	"version": "0.1",
 	"network_service": {
 		"vendor": "eu.5gtango",
-		"name": "NS-squid-haproxy",
+		"name": "ns-squid-haproxy",
 		"version": "0.1"
 	},
 	"monitoring_rules": [{
