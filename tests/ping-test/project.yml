@@ -3,7 +3,7 @@ descriptor_extension: yml
 version: '0.5'
 package:
   vendor: "eu.5gtango"
-  name: "ping-test"
+  name: "test-connectivity"
   version: "0.1"
   maintainer: "Luis Hens, ATOS"
   description: "This is a 5GTANGO test package for http VUT Benchmarking"
