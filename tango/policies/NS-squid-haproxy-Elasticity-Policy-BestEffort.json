@@ -1,6 +1,6 @@
 {
 	"descriptor_schema": "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/policy-descriptor/policy-schema.yml",
-	"name": "NS-squid-haproxy-Elasticity-Policy-Average",
+	"name": "NS-squid-haproxy-Elasticity-Policy-BestEffort",
 	"vendor": "eu.5gtango",
 	"version": "0.1",
 	"network_service": {
