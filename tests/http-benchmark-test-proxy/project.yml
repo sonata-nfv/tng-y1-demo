@@ -3,7 +3,7 @@ descriptor_extension: yml
 version: '0.5'
 package:
   vendor: "eu.5gtango"
-  name: "http-benchmarking-test-advanced"
+  name: "test-http-benchmarking-advanced"
   version: "0.1"
   maintainer: "Felipe Vicens, ATOS"
   description: "This is a 5GTANGO test package for http VUT Benchmarking"

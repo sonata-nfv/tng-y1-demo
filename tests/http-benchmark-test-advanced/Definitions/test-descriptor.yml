@@ -1,6 +1,6 @@
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml"
 vendor: "eu.5gtango.atos"
-name: "http-benchmark-test-advanced"
+name: "test-http-benchmark-advanced"
 version: "0.1"
 author: "Felipe Vicens, ATOS"
 description: >
