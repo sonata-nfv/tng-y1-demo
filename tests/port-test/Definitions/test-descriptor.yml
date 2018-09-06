@@ -1,6 +1,6 @@
 descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml"
-vendor: "eu.5gtango.atos.simple-test-descriptor"
-name: "vnv-test-ports"
+vendor: "eu.5gtango.atos"
+name: "test-vnv-ports"
 version: "0.1"
 author: "AR, ALB"
 description: >
