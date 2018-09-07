@@ -74,7 +74,7 @@ for RATE in $RATES; do
   /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1 > $RATE.tmp
   cat $RATE.tmp >>  $LogFile
   /bin/cat $RATE.tmp | tail -58 | jq '{requests, duration_in_microseconds, bytes, requests_per_sec, bytes_transfer_per_sec, latency_distribution}' > rate-$RATE.json
-  /bin/cat $RATE.tmp | tail -58 | jq '{ graphs }' > graphs-$RATE.json
+  /bin/cat $RATE.tmp | tail -58 | jq '{ graphs }' | jq ".graphs[0].title = \"Latency Distribution Iteration $RATE\"" > graphs-$RATE.json
   /bin/cat $RATE.tmp | tail -58 | jq "{ requests_per_sec, \"requests\": $RATE }" > overall-$RATE.json
 done
 
