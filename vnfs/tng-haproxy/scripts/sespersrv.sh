@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sessions=$(/etc/snmp/scripts/stat.sh BACKEND scur)
+sessions=$(/etc/snmp/scripts/stat.sh BACKEND rate)
 servers=$(/etc/snmp/scripts/stat.sh BACKEND act)
 
 if [[ $servers == 0  ]];
