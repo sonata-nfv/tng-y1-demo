@@ -1,6 +1,6 @@
 {
 	"descriptor_schema": "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/policy-descriptor/policy-schema.yml",
-	"name": "NS-squid-haproxy-Elasticity-Policy-Average",
+	"name": "NS-squid-haproxy-Elasticity-Policy-BestEffort",
 	"vendor": "eu.5gtango",
 	"version": "0.1",
 	"network_service": {
@@ -10,7 +10,7 @@
 	},
 	"monitoring_rules": [
 		{
-			"name": "mon_rule:vnf:haproxy-vnf:vdu:vdu01:haproxy_frontend_scur",
+			"name": "haproxy-vnf:vdu01:haproxy_frontend_scur:more500",
 			"description": "Trigger events if haproxy frontend session are 500.",
 			"duration": 20,
 			"duration_unit": "s",
@@ -18,7 +18,7 @@
 			"threshold": " > 500"
 		},
 		{
-			"name": "mon_rule:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_sespsrv",
+			"name": "haproxy-vnf:vdu01:haproxy_backend_sespsrv:more500",
 			"description": "Trigger events if haproxy number of the active sessions per squid server are more than 500.",
 			"duration": 20,
 			"duration_unit": "s",
@@ -26,7 +26,7 @@
 			"threshold": " > 500"
 		},
 		{
-			"name": "mon_rule1:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_sespsrv",
+			"name": "haproxy-vnf:vdu01:haproxy_backend_sespsrv:less70",
 			"description": "Trigger events if haproxy number of the active sessions per squid server are less than 70.",
 			"duration": 1,
 			"duration_unit": "m",
@@ -34,7 +34,7 @@
 			"threshold": " < 70"
 		},
 		{
-			"name": "mon_rule:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_actsrvs",
+			"name": "haproxy-vnf:vdu01:haproxy_backend_actsrvs:more1",
 			"description": "Trigger events if haproxy number of the squid servers which are in active state are more than 1.",
 			"duration": 20,
 			"duration_unit": "s",
@@ -42,7 +42,7 @@
 			"threshold": " > 1"
 		},
 		{
-			"name": "mon_rule1:vnf:haproxy-vnf:vdu:vdu01:haproxy_backend_actsrvs",
+			"name": "haproxy-vnf:vdu01:haproxy_backend_actsrvs:less3",
 			"description": "Trigger events if haproxy number of the squid servers which are in active state are less than 3.",
 			"duration": 20,
 			"duration_unit": "s",
@@ -65,7 +65,7 @@
 				"type": "string",
 				"input": "text",
 				"operator": "equal",
-				"value": "mon_rule_vnf_haproxy_vnf_vdu_vdu01_haproxy_backend_sespsrv"
+				"value": "haproxy_vnf_vdu01_haproxy_backend_sespsrv_more500"
 			},
 			{
 				"id": "haproxy-vnf.LogMetric",
@@ -73,7 +73,7 @@
 				"type": "string",
 				"input": "text",
 				"operator": "equal",
-				"value": "mon_rule1_vnf_haproxy_vnf_vdu_vdu01_haproxy_backend_actsrvs"
+				"value": "haproxy_vnf_vdu01_haproxy_backend_actsrvs_less3"
 			}]
 		},
 		"actions": [{
@@ -102,7 +102,7 @@
 					"type": "string",
 					"input": "text",
 					"operator": "equal",
-					"value": "mon_rule1_vnf_haproxy_vnf_vdu_vdu01_haproxy_backend_sespsrv"
+					"value": "haproxy_vnf_vdu01_haproxy_backend_sespsrv_less70"
 				},
 				{
 					"id": "haproxy-vnf.LogMetric",
@@ -110,7 +110,7 @@
 					"type": "string",
 					"input": "text",
 					"operator": "equal",
-					"value": "mon_rule_vnf_haproxy_vnf_vdu_vdu01_haproxy_backend_actsrvs"
+					"value": "haproxy_vnf_vdu01_haproxy_backend_actsrvs_more1"
 				}
 			]
 		},
