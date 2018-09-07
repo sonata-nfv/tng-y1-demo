@@ -8,22 +8,7 @@
 		"name": "ns-squid-haproxy",
 		"version": "0.1"
 	},
-	"monitoring_rules": [{
-			"name": "squid-vnf:vdu01:cpu_util:more50",
-			"description": "Trigger events if CPU load of squid is above 50 percent.",
-			"duration": 20,
-			"duration_unit": "s",
-			"condition": "cpu_util",
-			"threshold": "> 50"
-		},
-		{
-			"name": "haproxy-vnf:vdu01:haproxy_frontend_scur:more150",
-			"description": "Trigger events if haproxy frontend session are 150.",
-			"duration": 20,
-			"duration_unit": "s",
-			"condition": "haproxy_frontend_scur",
-			"threshold": " > 150"
-		},
+	"monitoring_rules": [
 		{
 			"name": "haproxy-vnf:vdu01:haproxy_backend_sespsrv:more150",
 			"description": "Trigger events if haproxy number of the active sessions per squid server are more than 150.",
@@ -43,8 +28,8 @@
 		{
 			"name": "haproxy-vnf:vdu01:haproxy_backend_actsrvs:more1",
 			"description": "Trigger events if haproxy number of the squid servers which are in active state are more than 1.",
-			"duration": 20,
-			"duration_unit": "s",
+			"duration": 1,
+			"duration_unit": "m",
 			"condition": "haproxy_backend_actsrvs",
 			"threshold": " > 1"
 		}
