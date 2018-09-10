@@ -129,8 +129,8 @@ let counter=0
 #requests=`ls overall*.json | tr "." "\n" | sed 's/\overall-//g' | grep -v json | xargs`
 
 # Graph template
-#json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_sent", "s2": "requests_processed" }, "data": { "s1": [], "s2": [] } }]} '`
-json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_sent", "s2": "requests_processed" }, "data": { "s1x": [], "s1y": [], "s2x": [], "s2y": [] } }]} '`
+#json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration #", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_sent", "s2": "requests_processed" }, "data": { "s1": [], "s2": [] } }]} '`
+json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration #", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_processed", "s2": "requests_sent" }, "data": { "s1x": [], "s1y": [], "s2x": [], "s2y": [] } }]} '`
 
 # Adding data to graphs object
 for i in $RATES
