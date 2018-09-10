@@ -173,13 +173,13 @@ class CssFSM(sonSMbase):
 
         payload = {}
         payload['name'] = 'squid'
-        payload['port'] = 80
+        payload['port'] = 3128
         payload['backends'] = []
 
         counter = 1
         for backend in content['ips']:
             new_backend = {}
-            new_backend['name'] = 'vnf' + str(counter)
+            new_backend['name'] = 'squid-server-' + str(counter)
             new_backend['host'] = backend
             new_backend['port'] = 3128
             payload['backends'].append(new_backend)
