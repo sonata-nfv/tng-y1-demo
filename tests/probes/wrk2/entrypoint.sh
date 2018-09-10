@@ -100,7 +100,7 @@ graphs=`echo $graphs | jq .graphs`
 
 # Variables initialization
 # Graph template
-json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_sent", "s2": "requests_processed" }, "data": { "s1x": [], "s1y": [], "s2x": [], "s2y": [] } }]} '`
+json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration #", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_processed", "s2": "requests_sent" }, "data": { "s1x": [], "s1y": [], "s2x": [], "s2y": [] } }]} '`
 
 # Adding data to graphs object
 join_json=`cat overall-$RATE.json`
