@@ -3,7 +3,7 @@ descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/mast
 
 vendor: "eu.5gtango"
 name: "ns-squid-haproxy"
-version: "0.1"
+version: "0.2"
 author: "Luis Hens"
 description: "Ns for year 1 demo"
 
