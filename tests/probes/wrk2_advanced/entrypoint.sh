@@ -69,13 +69,34 @@ else
   config="/app/result.lua"
 fi
 
+#Checking service availability 1 min
+connection=false
+for i in {1..10}
+do
+ echo "Trying to connect to the VNF. Try: $i"
+ test=$(nc -n -z -v -w1 $EXTERNAL_IP $PORT 2>&1)
+ if [[ $test == Connection*succeeded* ]]; then
+   connection=true
+   echo "Connection SUCCEEDED"
+   break
+ fi
+sleep 6
+done
+
+if [ "$connection" = false ] ; then
+   echo "Connection FAILED"
+   exit 1
+fi
+
+let iteration=0
 for RATE in $RATES; do
   echo "COMMAND: /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1"
   /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1 > $RATE.tmp
   cat $RATE.tmp >>  $LogFile
   /bin/cat $RATE.tmp | tail -58 | jq '{requests, duration_in_microseconds, bytes, requests_per_sec, bytes_transfer_per_sec, latency_distribution}' > rate-$RATE.json
-  /bin/cat $RATE.tmp | tail -58 | jq '{ graphs }' | jq ".graphs[0].title = \"Latency Distribution Iteration $RATE\"" > graphs-$RATE.json
+  /bin/cat $RATE.tmp | tail -58 | jq '{ graphs }' | jq ".graphs[0].title = \"Latency Distribution Iteration $iteration\"" > graphs-$RATE.json
   /bin/cat $RATE.tmp | tail -58 | jq "{ requests_per_sec, \"requests\": $RATE }" > overall-$RATE.json
+  let iteration++
 done
 
 # Processing data

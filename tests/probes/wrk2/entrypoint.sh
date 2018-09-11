@@ -69,6 +69,24 @@ else
   config="/app/result.lua"
 fi
 
+#Checking service availability 1 min
+connection=false
+for i in {1..10}
+do
+ echo "Trying to connect to the VNF. Try: $i"
+ test=$(nc -n -z -v -w1 $EXTERNAL_IP $PORT 2>&1)
+ if [[ $test == Connection*succeeded* ]]; then
+   connection=true
+   echo "Connection SUCCEEDED"
+   break
+ fi
+sleep 6
+done
+
+if [ "$connection" = false ] ; then
+   echo "Connection FAILED"
+   exit 1
+fi
 
 echo "COMMAND: /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1"
 /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1 > $RATE.tmp
