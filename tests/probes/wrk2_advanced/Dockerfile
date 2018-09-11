@@ -18,6 +18,7 @@ LABEL maintainer="Felipe Vicens felipevicens@atos.net"
 RUN apt-get update && \
     apt-get install -y libssl-dev \
                        jq \
+		       netcat-openbsd \
                        && rm -rf /var/lib/apt/lists/*
 COPY --from=0 /app/wrk2/wrk /usr/local/bin/
 ADD result.lua /app/
