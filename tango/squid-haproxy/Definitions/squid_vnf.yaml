@@ -4,7 +4,7 @@ vendor: "eu.5gtango"
 name: "squid-vnf"
 version: "0.2"
 author: "Luis Hens :@ Atos"
-description: "squid"
+description: "Squid is a caching and forwarding HTTP web proxy. It has a wide variety of uses, including speeding up a web server by caching repeated requests, caching web, DNS and other computer network lookups for a group of people sharing network resources, and aiding security by filtering traffic."
 
 virtual_deployment_units:
   - id: "vdu01"
