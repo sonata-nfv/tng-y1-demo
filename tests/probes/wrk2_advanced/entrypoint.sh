@@ -88,7 +88,7 @@ if [ "$connection" = false ] ; then
    exit 1
 fi
 
-let iteration=0
+let iteration=1
 for RATE in $RATES; do
   echo "COMMAND: /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1"
   /usr/local/bin/wrk -s $config $opt2 $opt3 $opt4 $opt5 --rate $RATE $opt7 --latency $opt1 > $RATE.tmp
