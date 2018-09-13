@@ -5,7 +5,7 @@ vendor: "eu.5gtango"
 name: "ns-squid-haproxy"
 version: "0.2"
 author: "Luis Hens"
-description: "Ns for year 1 demo"
+description: "This NS provides a flexible and high available proxy service, by combining the opensource HAProxy load balancer with a pool of squid backend servers."
 
 network_functions:
   - vnf_id: "vnf_squid"

@@ -4,13 +4,13 @@ vendor: "eu.5gtango"
 name: "haproxy-vnf"
 version: "0.2"
 author: "Luis Hens :@ Atos"
-description: "haproxy"
+description: "HAProxy is free, open source software that provides a high availability load balancer for TCP and HTTP-based applications that spreads requests across multiple servers."
 
 virtual_deployment_units:
   - id: "vdu01"
     vm_image: "http://www.google.es"
     vm_image_format: "qcow2"
-    vm_image_md5: 5d27b84343f1365f34461be1798d401c
+    vm_image_md5: ee71a81ffdb4257f54d7ce936d9d4513
     resource_requirements:
       cpu:
         vcpus: 1

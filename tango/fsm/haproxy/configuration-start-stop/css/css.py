@@ -169,21 +169,20 @@ class CssFSM(sonSMbase):
         """
 
         # Wait until all backend servers are available
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         for backend_ip in content['ips']:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             LOG.info("Checking status of backend: " + str(backend_ip))
             while True:
                 result = sock.connect_ex((backend_ip, 3128))
                 if result == 0:
                     LOG.info("Port is open")
+                    sock.close()
                     break
                 else:
                     LOG.info("Port is not open")
                 LOG.info("Errorcode: " + str(result))
                 time.sleep(1)
-
-        sock.close()
 
         # The config event receives a list if IP addresses of backends. The
         # load needs to be balanced among these IP addreses.
