@@ -96,6 +96,10 @@ for RATE in $RATES; do
   /bin/cat $RATE.tmp | tail -58 | jq '{requests, duration_in_microseconds, bytes, requests_per_sec, bytes_transfer_per_sec, latency_distribution}' > rate-$RATE.json
   /bin/cat $RATE.tmp | tail -58 | jq '{ graphs }' | jq ".graphs[0].title = \"Latency Distribution Iteration $iteration\"" > graphs-$RATE.json
   /bin/cat $RATE.tmp | tail -58 | jq "{ requests_per_sec, \"requests\": $RATE }" > overall-$RATE.json
+  /bin/cat $RATE.tmp | tail -58 | jq "{ \"percentile_50\": .latency_distribution[0].latency_in_microseconds }" > percentile50-$RATE.json
+  /bin/cat $RATE.tmp | tail -58 | jq "{ \"percentile_75\": .latency_distribution[1].latency_in_microseconds }" > percentile75-$RATE.json
+  /bin/cat $RATE.tmp | tail -58 | jq "{ \"percentile_90\": .latency_distribution[2].latency_in_microseconds }" > percentile90-$RATE.json
+  /bin/cat $RATE.tmp | tail -58 | jq "{ \"percentile_99\": .latency_distribution[3].latency_in_microseconds }" > percentile99-$RATE.json
   let iteration++
 done
 
@@ -152,33 +156,59 @@ let counter=0
 # Graph template
 #json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration #", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_sent", "s2": "requests_processed" }, "data": { "s1": [], "s2": [] } }]} '`
 json=`echo '{"graphs": [ { "title": "Http Benchmark test", "x-axis-title": "Iteration #", "x-axis-unit": "#", "y-axis-title": "Requests per second", "y-axis-unit": "rps", "type": "line", "series": { "s1": "requests_processed", "s2": "requests_sent" }, "data": { "s1x": [], "s1y": [], "s2x": [], "s2y": [] } }]} '`
+json2=`echo '{"graphs": [ { "title": "Latency percentile Aggregated", "x-axis-title": "Iteration #", "x-axis-unit": "#", "y-axis-title": "Latency in miliseconds", "y-axis-unit": "miliseconds", "type": "line", "series": { "s1": "percentile 50", "s2": "percentile 75", "s3": "percentile 90", "s4": "percentile 99" }, "data": { "s1x": [], "s1y": [], "s2x": [], "s2y": [], "s3x": [], "s3y": [], "s4x": [], "s4y": [] } }]} '`
+#json2=`echo '{"graphs": [ { "title": "Latency percentile 90", "x-axis-title": "Iteration #", "x-axis-unit": "#", "y-axis-title": "Latency in miliseconds", "y-axis-unit": "miliseconds", "type": "line", "series": { "s1": "latency" }, "data": { "s1x": [], "s1y": [] } }]} '`
 
 # Adding data to graphs object
 for i in $RATES
 do
   join_json=`cat overall-$i.json`
+  join_json2=`cat percentile50-$i.json`
+  join_json3=`cat percentile75-$i.json`
+  join_json4=`cat percentile90-$i.json`
+  join_json5=`cat percentile99-$i.json`
   let iteration=$counter+1
   s1=`echo $join_json | jq '.requests_per_sec'`
   s2=`echo $join_json | jq '.requests'`
+  s3=`echo $join_json2 | jq '.percentile_50'`
+  s4=`echo $join_json3 | jq '.percentile_75'`
+  s5=`echo $join_json4 | jq '.percentile_90'`
+  s6=`echo $join_json5 | jq '.percentile_99'`
   json=`echo $json | jq ".graphs[0].data.s1x += [$iteration]"`
   json=`echo $json | jq ".graphs[0].data.s1y += [$s1]"`
   json=`echo $json | jq ".graphs[0].data.s2x += [$iteration]"`
   json=`echo $json | jq ".graphs[0].data.s2y += [$s2]"`
-#  json=`echo $json | jq ".graphs[0].data.s1[$counter] += { \"x-axis\": $iteration, \"y-axis\": $s1 }"`
-#  json=`echo $json | jq ".graphs[0].data.s2[$counter] += { \"x-axis\": $iteration, \"y-axis\": $s2 }"`
+  json2=`echo $json2 | jq ".graphs[0].data.s1x += [$iteration]"`
+  json2=`echo $json2 | jq ".graphs[0].data.s1y += [$s3 / 1000]"`
+  json2=`echo $json2 | jq ".graphs[0].data.s2x += [$iteration]"`
+  json2=`echo $json2 | jq ".graphs[0].data.s2y += [$s4 / 1000]"`
+  json2=`echo $json2 | jq ".graphs[0].data.s3x += [$iteration]"`
+  json2=`echo $json2 | jq ".graphs[0].data.s3y += [$s5 / 1000]"`
+  json2=`echo $json2 | jq ".graphs[0].data.s4x += [$iteration]"`
+  json2=`echo $json2 | jq ".graphs[0].data.s4y += [$s6 / 1000]"`
   let counter++
 done
 
 echo $json | jq . > requests.json
 
-final_graph_object=`echo $json | jq ".graphs += $graphs"`
+latency_graph_object=`echo $json2 | jq ".graphs[0]"`
+
+echo "graphs $graphs"
+final_graph_object=`echo $json | jq ".graphs += [$latency_graph_object]"`
+echo "final1 $final_graph_object"
+final_graph_object=`echo $final_graph_object | jq ".graphs += $graphs"`
+#final_graph_object=`echo $json | jq ".graphs += $graphs"`
+echo "final2 $final_graph_object"
+#final_graph_object=`echo $final_graph_object | jq ".graphs += [$latency_graph_object]"`
+#echo "final3 $final_graph_object"
+
+
 the_graphs=`echo $final_graph_object | jq '.graphs'`
-#echo "the_graphs" $the_graphs
+echo "thegraphs $the_graphs"
 
 detail_json=`echo $jsondetail | jq ". += [$final_graph_object]"`
+
+echo "detail_json $detail_json"
 the_json=`echo $jsondetail | jq '.[].details'`
 detail_sin=`echo $detail_json | jq "{ details: $the_json, graphs: $the_graphs}"`
-#detail_sin=`echo $detail_json | jq "{ details: $jsondetail, graphs: $the_graphs}"`
-#detail_sin=`jq "{ details: $jsondetail, graphs: $the_graphs}"`
 echo  $detail_sin | jq . > $DataFile
-#echo "detail_sin" $detail_sin
