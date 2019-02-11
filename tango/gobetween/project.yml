@@ -1,18 +1,18 @@
----
 descriptor_extension: yml
 version: '0.5'
 package:
-  vendor: "eu.5gtango"
-  name: "ns-gobetween"
-  version: "0.1"
-  maintainer: "Ignacio Dominguez"
-  description: "This is the 5GTANGO network service for year 1 demo"
+  vendor: eu.5gtango
+  name: ns-gobetween
+  version: '0.1'
+  maintainer: Ignacio Dominguez
+  description: This is the 5GTANGO network service for year 1 demo
 files:
-  - path: "sources/nsd/gobetween.yml"
-    type: "application/vnd.5gtango.nsd"
-  - path: "sources/vnf/gobetween-vnf/gobetween-vnf.yml"
-    type: "application/vnd.5gtango.vnfd"
-  - path: "Icons/atos_logo.png"
-    type: "image/png"
-  - path: "Licenses/LICENSE"
-    type: "text/plain"
+- path: sources/nsd/gobetween.yml
+  type: application/vnd.5gtango.nsd
+- path: sources/vnf/gobetween-vnf/gobetween-vnf.yml
+  type: application/vnd.5gtango.vnfd
+- path: Icons/atos_logo.png
+  type: image/png
+- path: Licenses/LICENSE
+  type: text/plain
+uuid: 0d46ac3f-f60a-4cc6-86ac-446470cfda0e
