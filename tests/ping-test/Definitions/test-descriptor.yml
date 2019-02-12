@@ -1,4 +1,4 @@
-descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml"
+descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/test-descriptor-schema.yml"
 vendor: "eu.5gtango.atos"
 name: "test-connectivity"
 version: "0.1"

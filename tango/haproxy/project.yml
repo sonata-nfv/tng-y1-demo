@@ -1,26 +1,26 @@
----
 descriptor_extension: yml
 version: '0.5'
 package:
-  vendor: "eu.5gtango"
-  name: "ns-haproxy"
-  version: "0.1"
-  maintainer: "Luis Hens"
-  description: "This is the 5GTANGO network service for year 1 demo"
+  vendor: eu.5gtango
+  name: ns-haproxy
+  version: '0.1'
+  maintainer: Luis Hens
+  description: This is the 5GTANGO network service for year 1 demo
 files:
-  - path: "sources/nsd/haproxy.yml"
-    type: "application/vnd.5gtango.nsd"
-    tags:  # (optional)
-      - "eu.5gtango"
-  - path: "sources/vnf/haproxy-vnf/haproxy-vnf.yml"
-    type: "application/vnd.5gtango.vnfd"
-    tags:  # (optional)
-      - "eu.5gtango"
-  - path: "Icons/upb_logo.png"
-    type: "image/png"
-  - path: "Images/mycloudimage.ref"
-    type: "application/vnd.5gtango.ref"
-  - path: "Licenses/LICENSE"
-    type: "text/plain"
-  - path: "Scripts/cloud.init"
-    type: "text/x-shellscript"
+- path: sources/nsd/haproxy.yml
+  type: application/vnd.5gtango.nsd
+  tags:
+  - eu.5gtango
+- path: sources/vnf/haproxy-vnf/haproxy-vnf.yml
+  type: application/vnd.5gtango.vnfd
+  tags:
+  - eu.5gtango
+- path: Icons/upb_logo.png
+  type: image/png
+- path: Images/mycloudimage.ref
+  type: application/vnd.5gtango.ref
+- path: Licenses/LICENSE
+  type: text/plain
+- path: Scripts/cloud.init
+  type: text/x-shellscript
+uuid: 78ecb3a7-20e0-4657-87b8-746120cdeb8c

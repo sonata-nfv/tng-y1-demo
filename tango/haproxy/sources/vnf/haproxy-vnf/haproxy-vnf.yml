@@ -2,7 +2,7 @@
 ## Some general information regarding this
 ## VNF descriptor.
 ##
-descriptor_version: "vnfd-schema-01"
+descriptor_schema: "https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/function-descriptor/vnfd-schema.yml"
 vendor: "atos"
 name: "haproxy-vnf"
 version: "0.1"
