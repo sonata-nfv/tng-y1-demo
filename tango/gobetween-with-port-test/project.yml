@@ -1,0 +1,26 @@
+descriptor_extension: yml
+version: '0.5'
+package:
+  vendor: eu.5gtango
+  name: ns-gobetween-with-port-test
+  version: '0.1'
+  maintainer: George Andreou
+  description: This is the 5GTANGO package with network service with a test after the Y1 demo
+
+files:
+- path: sources/nsd/gobetween.yml
+  type: application/vnd.5gtango.nsd
+- path: sources/vnf/gobetween-vnf/gobetween-vnf.yml
+  type: application/vnd.5gtango.vnfd
+- path: Icons/atos_logo.png
+  type: image/png
+- path: Licenses/LICENSE
+  type: text/plain
+- path: Definitions/test-descriptor.yml
+  type: application/vnd.5gtango.tstd
+- path: Tests/config.cfg
+  type: text/plain
+- path: Tests/runner.sh
+  type: text/x-shellscript
+uuid: 0d46ac3f-f60a-4cc6-86ac-446470cfda0e
+
